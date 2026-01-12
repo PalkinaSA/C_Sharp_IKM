@@ -1,0 +1,74 @@
+﻿@model C_Sharp_IKM.Models.Employee
+
+@{
+    ViewData["Title"] = "Удалить сотрудника";
+}
+
+<h2>Удаление сотрудника</h2>
+
+@* 1. Если контроллер нашел ошибку (например, есть связанные билеты) *@
+@if (!ViewData.ModelState.IsValid)
+{
+    <div class="alert alert-danger">
+        <h4>Ошибка удаления!</h4>
+        @* Выводит текст: "Невозможно удалить сотрудника, у которого есть билеты" *@
+        <div asp-validation-summary="ModelOnly"></div>
+    </div>
+}
+else
+{
+    <h3 class="text-danger">Вы уверены, что хотите удалить этого сотрудника?</h3>
+}
+
+@* 2. Карточка с данными сотрудника *@
+<div class="card mb-3">
+    <div class="card-body">
+        <p>Табельный номер: @Model.ServiceNumber</p>
+        <p>Фамилия: @Model.Surname</p>
+        <p>Имя: @Model.Name</p>
+        <p>Должность: @Model.Post</p>
+        <p>Номер телефона: @Model.PhoneNumber</p>
+    </div>
+</div>
+
+@* 3. Форма отправки запроса *@
+<form asp-action="Delete" method="post">
+    @* Передаем ID сотрудника скрыто, чтобы контроллер знал, кого удалять *@
+    <input type="hidden" asp-for="ServiceNumber" />
+
+    @* Если ошибок нет — показываем кнопку удаления. Если есть ошибка — прячем её *@
+    @if (ViewData.ModelState.IsValid)
+    {
+        <button type="submit" class="btn btn-danger">Да, удалить</button>
+    }
+
+    <a asp-action="Index" class="btn btn-secondary">Нет, отмена</a>
+</form>
+
+@* 4. Всплывающее (модальное) окно для ошибок *@
+<div class="modal fade" id="errorModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-danger text-white">
+                <h5 class="modal-title">Внимание</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                У этого сотрудника есть связанные билеты. Сначала удалите билеты или переназначьте их на другого кассира!
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // Если сервер вернул ошибку, автоматически открываем всплывающее окно
+        @if (!ViewData.ModelState.IsValid)
+        {
+                <text>
+                var myModal = new bootstrap.Modal(document.getElementById('errorModal'));
+                myModal.show();
+                </text>
+        }
+    </script>
+}

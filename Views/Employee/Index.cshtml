@@ -1,0 +1,44 @@
+﻿@model IEnumerable<Employee>
+
+@{
+    ViewData["Title"] = "Сотрудники";
+}
+
+<h2>Список сотрудников</h2>
+
+@* Кнопка перехода на страницу создания *@
+<a asp-action="Create" class="btn btn-success mb-3">Добавить сотрудника</a>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Табельный номер</th>
+            <th>Фамилия</th>
+            <th>Имя</th>
+            <th>Должность</th>
+            <th>Телефон</th>
+            <th>Действия</th>
+        </tr>
+    </thead>
+    <tbody>
+        @* Цикл: для каждого сотрудника в списке создаем строку таблицы *@
+        @foreach (var item in Model)
+        {
+            <tr>
+                @* Выводим данные конкретного сотрудника *@
+                <td>@item.ServiceNumber</td>
+                <td>@item.Surname</td>
+                <td>@item.Name</td>
+                <td>@item.Post</td>
+                <td>@item.PhoneNumber</td>
+
+                <td>
+                    @* Кнопки действий. asp-route-id передает ID сотрудника в контроллер *@
+                    <a asp-action="Edit" asp-route-id="@item.ServiceNumber" class="btn btn-sm btn-success">Изменить</a>
+                    <a asp-action="Details" asp-route-id="@item.ServiceNumber" class="btn btn-sm btn-success">Подробно</a>
+                    <a asp-action="Delete" asp-route-id="@item.ServiceNumber" class="btn btn-sm btn-danger">Удалить</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

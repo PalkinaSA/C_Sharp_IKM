@@ -1,0 +1,28 @@
+﻿@model C_Sharp_IKM.Models.Ticket
+
+@{
+    ViewData["Title"] = "Удалить билет";
+}
+
+<h2 class="text-danger">Удаление билета</h2>
+<p>Вы уверены, что хотите безвозвратно удалить этот билет?</p>
+
+<div class="card mb-4">
+    <div class="card-body">
+        @* Показываем информацию о билете, чтобы пользователь не ошибся *@
+        <p>Номер билета: @Model.TicketNumber</p>
+        <p>Продавец (Сотрудник): @Model.Employee?.Surname</p>
+        <p>Событие: @Model.Event?.Name</p>
+        <p>Дата продажи: @Model.SaleDate.ToString("dd.MM.yyyy")</p>
+        <p>Тип: @Model.TicketType</p>
+    </div>
+</div>
+
+@* Форма, которая отправит запрос на удаление *@
+<form asp-action="Delete" method="post">
+    @* СКРЫТОЕ ПОЛЕ: передает ID билета в контроллер, чтобы тот знал, что удалять *@
+    <input type="hidden" asp-for="TicketNumber" />
+
+    <button type="submit" class="btn btn-danger">Да, удалить</button>
+    <a asp-action="Index" class="btn btn-secondary">Нет, отмена</a>
+</form>

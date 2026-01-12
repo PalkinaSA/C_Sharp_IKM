@@ -1,0 +1,32 @@
+﻿@model C_Sharp_IKM.Models.Ticket
+
+@{
+    ViewData["Title"] = "Детали билета";
+}
+
+<h2>Информация о билете</h2>
+
+<div class="card">
+    <div class="card-body">
+        @* Выводим данные напрямую через @Model *@
+        <p>Номер билета: @Model.TicketNumber</p>
+
+        <p>Сотрудник: @Model.Employee.FullName (Таб. № @Model.ServiceNumber)</p>
+
+        <p>Событие: @Model.Event.Name (ID @Model.EventId)</p>
+
+        <p>Дата продажи: @Model.SaleDate.ToString("dd.MM.yyyy")</p>
+
+        <p>Тип билета: @Model.TicketType</p>
+
+        <p>Способ оплаты: @Model.PaymentMethod</p>
+    </div>
+</div>
+
+<div class="mt-3">
+    @* Ссылка на редактирование билета *@
+    <a asp-action="Edit" asp-route-id="@Model.TicketNumber" class="btn btn-success">Изменить</a>
+
+    @* Возврат к общему списку *@
+    <a asp-action="Index" class="btn btn-secondary">Назад к списку</a>
+</div>

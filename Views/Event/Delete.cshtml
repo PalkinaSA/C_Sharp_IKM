@@ -1,0 +1,71 @@
+﻿@model C_Sharp_IKM.Models.Event
+
+@{
+    ViewData["Title"] = "Удаление события";
+}
+
+<h2>Удаление события</h2>
+
+@* 1. Блок отображения ошибок (если нельзя удалить) *@
+@if (!ViewData.ModelState.IsValid)
+{
+    <div class="alert alert-danger">
+        <h4>Внимание!</h4>
+        @* Выводим текст ошибки, пришедший из контроллера *@
+        <div asp-validation-summary="ModelOnly"></div>
+    </div>
+}
+else
+{
+    <h3 class="text-danger">Вы уверены, что хотите удалить это событие?</h3>
+}
+
+@* 2. Карточка с данными события *@
+<div class="card mb-3">
+    <div class="card-body">
+        <p>Название: @Model.Name</p>
+        <p>Дата события: @Model.EventDate.ToString("dd.MM.yyyy")</p>
+        <p>Тип события: @Model.EventType</p>
+    </div>
+</div>
+
+@* 3. Форма удаления *@
+<form asp-action="Delete" method="post">
+    <input type="hidden" asp-for="Id" />
+
+    @* Если ошибок нет — показываем кнопку удаления. Если есть ошибка (билеты) — кнопка исчезает *@
+    @if (ViewData.ModelState.IsValid)
+    {
+        <button type="submit" class="btn btn-danger">Да, удалить</button>
+    }
+
+    <a asp-action="Index" class="btn btn-secondary">Нет, отмена</a>
+</form>
+
+@* 4. Модальное окно (всплывает, если возникла ошибка) *@
+<div class="modal fade" id="errorModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-danger text-white">
+                <h5 class="modal-title">Внимание</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                На данное событие уже проданы билеты. Сначала удалите билетыили!
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // Если в модели есть ошибки, автоматически показываем модальное окно
+        @if (!ViewData.ModelState.IsValid)
+        {
+                <text>
+                var myModal = new bootstrap.Modal(document.getElementById('errorModal'));
+                myModal.show();
+                </text>
+        }
+    </script>
+}

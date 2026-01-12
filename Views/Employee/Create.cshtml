@@ -1,0 +1,60 @@
+﻿@model Employee
+
+@{
+    ViewData["Title"] = "Новый сотрудник";
+}
+
+<div class="container">
+    <h2>Добавление сотрудника</h2>
+
+    @* Форма отправляет данные в метод Create (POST) *@
+    <form asp-action="Create" method="post">
+        @Html.AntiForgeryToken() @* Защита от взлома *@
+
+        @* 1. Табельный номер *@
+        <div class="mb-3">
+            <label asp-for="ServiceNumber">Табельный номер</label>
+            <input asp-for="ServiceNumber" class="form-control" type="number" />
+            <span asp-validation-for="ServiceNumber" class="text-danger"></span>
+        </div>
+
+        @* 2. Фамилия *@
+        <div class="mb-3">
+            <label asp-for="Surname">Фамилия</label>
+            <input asp-for="Surname" class="form-control" />
+            <span asp-validation-for="Surname" class="text-danger"></span>
+        </div>
+
+        @* 3. Имя *@
+        <div class="mb-3">
+            <label asp-for="Name">Имя</label>
+            <input asp-for="Name" class="form-control" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+
+        @* 4. Должность *@
+        <div class="mb-3">
+            <label asp-for="Post">Должность</label>
+            <input asp-for="Post" class="form-control" />
+            <span asp-validation-for="Post" class="text-danger"></span>
+        </div>
+
+        @* 5. Телефон *@
+        <div class="mb-3">
+            <label asp-for="PhoneNumber">Номер телефона</label>
+            <input asp-for="PhoneNumber" class="form-control" placeholder="+71234567890" />
+            <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+        </div>
+
+        @* 6. Кнопки *@
+        <div class="mt-4">
+            <button type="submit" class="btn btn-success">Создать</button>
+            <a asp-action="Index" class="btn btn-outline-secondary">Назад</a>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    @* Подключаем проверку данных на стороне клиента (чтобы страница не перезагружалась зря) *@
+    <partial name="_ValidationScriptsPartial" />
+}

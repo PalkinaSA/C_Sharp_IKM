@@ -1,0 +1,41 @@
+﻿@model IEnumerable<C_Sharp_IKM.Models.Event>
+
+@{
+    ViewData["Title"] = "События";
+}
+
+<h2>Список событий</h2>
+
+@* Кнопка перехода на страницу создания *@
+<a asp-action="Create" class="btn btn-success mb-3">Добавить новое событие</a>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Имя</th>
+            <th>Название</th>
+            <th>Дата события</th>
+            <th>Тип события</th>
+            <th>Действия</th>
+        </tr>
+    </thead>
+    <tbody>
+        @* Цикл: для каждого события в списке создаем строку таблицы *@
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Id</td>
+                <td>@item.Name</td>
+                <td>@item.EventDate.ToString("dd.MM.yyyy")</td>
+                <td>@item.EventType</td>
+
+                <td>
+                    @* Кнопки действий. asp-route-id передает ID события в контроллер *@
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-success">Изменить</a>
+                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-success">Подробно</a>
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-danger">Удалить</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

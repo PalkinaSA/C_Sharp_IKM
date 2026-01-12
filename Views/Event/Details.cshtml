@@ -1,0 +1,28 @@
+﻿@model C_Sharp_IKM.Models.Event
+
+@{
+    ViewData["Title"] = "Детали события";
+}
+
+<h2>Информация о событии</h2>
+
+<div class="card">
+    <div class="card-body">
+        @* Выводим данные напрямую через @Model *@
+        <p>ID события: @Model.Id</p>
+
+        <p>Название: @Model.Name</p>
+
+        <p>Дата события: @Model.EventDate.ToString("dd.MM.yyyy")</p>
+
+        <p>Тип события: @Model.EventType</p>
+    </div>
+</div>
+
+<div class="mt-3">
+    @* Ссылка на редактирование события *@
+    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-success">Изменить</a>
+
+    @* Возврат к общему списку *@
+    <a asp-action="Index" class="btn btn-secondary">Назад</a>
+</div>

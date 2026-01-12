@@ -1,0 +1,50 @@
+﻿@model C_Sharp_IKM.Models.Employee
+
+@{
+    ViewData["Title"] = "Редактирование сотрудника";
+}
+
+<h2>Редактирование сотрудника</h2>
+
+<div class="container">
+    <form asp-action="Edit" method="post">
+
+        @* 1. Скрытое поле *@
+        <input type="hidden" asp-for="ServiceNumber" />
+
+        @* 2. Поля для изменения *@
+        <div class="mb-3">
+            <label asp-for="Surname">Фамилия</label>
+            <input asp-for="Surname" class="form-control" />
+            <span asp-validation-for="Surname" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Name">Имя</label>
+            <input asp-for="Name" class="form-control" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Post">Должность</label>
+            <input asp-for="Post" class="form-control" />
+            <span asp-validation-for="Post" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="PhoneNumber">Телефон</label>
+            <input asp-for="PhoneNumber" class="form-control" />
+            <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+        </div>
+
+        @* 3. Кнопки *@
+        <div class="mt-4">
+            <button type="submit" class="btn btn-success">Сохранить изменения</button>
+            <a asp-action="Index" class="btn btn-secondary">Отмена</a>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

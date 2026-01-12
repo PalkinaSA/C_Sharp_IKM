@@ -1,0 +1,84 @@
+﻿@model C_Sharp_IKM.Models.Ticket
+
+@{
+    ViewData["Title"] = "Новый билет";
+}
+
+<div class="container">
+    <h2>Оформление билета</h2>
+
+    @* Форма отправляет данные в метод Create (POST) *@
+    <form asp-action="Create" method="post">
+        @Html.AntiForgeryToken() @* Защита от взлома *@
+
+        @* 1. Номер билета *@
+        <div class="mb-3">
+            <label asp-for="TicketNumber">Номер билета</label>
+            <input asp-for="TicketNumber" class="form-control" type="number" />
+            <span asp-validation-for="TicketNumber" class="text-danger"></span>
+        </div>
+
+        @* 2. Выбор Сотрудника (Связь с таблицей Employees) *@
+        <div class="mb-3">
+            <label asp-for="ServiceNumber">Сотрудник</label>
+            <select asp-for="ServiceNumber" class="form-control" asp-items="ViewBag.ServiceNumber">
+                <option value="">-- Выберите из списка --</option>
+            </select>
+            <span asp-validation-for="ServiceNumber" class="text-danger"></span>
+        </div>
+
+        @* 3. Выбор События (Связь с таблицей Events) *@
+        <div class="mb-3">
+            <label asp-for="EventId">Событие</label>
+            <select asp-for="EventId" class="form-control" asp-items="ViewBag.EventId">
+                <option value="">-- Выберите из списка --</option>
+            </select>
+            <span asp-validation-for="EventId" class="text-danger"></span>
+        </div>
+
+        @* 4. Дата продажи (Ограничена сегодняшним днем) *@
+        <div class="mb-3">
+            <label asp-for="SaleDate">Дата продажи</label>
+            <input asp-for="SaleDate" class="form-control" type="date" id="SaleDate" />
+            <span asp-validation-for="SaleDate" class="text-danger"></span>
+        </div>
+
+        @* 5. Тип билета и Оплата (Списки из контроллера) *@
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label asp-for="TicketType">Тип билета</label>
+                <select asp-for="TicketType" class="form-control" asp-items="ViewBag.TicketTypes">
+                    <option value="">-- Выберите из списка --</option>
+                </select>
+                <span asp-validation-for="TicketType" class="text-danger"></span>
+            </div>
+            <div class="col-md-6 mb-3">
+                <label asp-for="PaymentMethod">Оплата</label>
+                <select asp-for="PaymentMethod" class="form-control" asp-items="ViewBag.PaymentMethods">
+                    <option value="">-- Выберите из списка --</option>
+                </select>
+                <span asp-validation-for="PaymentMethod" class="text-danger"></span>
+            </div>
+        </div>
+
+        @* 6. Кнопки *@
+        <div class="mt-4">
+            <button type="submit" class="btn btn-success">Создать</button>
+            <a asp-action="Index" class="btn btn-secondary">Назад</a>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    @* Подключаем проверку данных на стороне клиента (чтобы страница не перезагружалась зря) *@
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        // Запрещаем выбирать будущие даты для продажи
+        document.addEventListener('DOMContentLoaded', () => {
+            const today = new Date().toISOString().split('T')[0];
+            const saleDateInput = document.getElementById('SaleDate');
+            saleDateInput.max = today;  // Установка ограничения
+            saleDateInput.value = today; // Ставим сегодня по умолчанию
+        });
+    </script>
+}

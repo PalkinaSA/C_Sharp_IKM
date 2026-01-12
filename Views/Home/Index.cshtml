@@ -1,0 +1,39 @@
+﻿@{
+    ViewData["Title"] = "Система управления событиями";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Система управления событиями</h1>
+
+    <div class="row mt-5">
+        <div class="col-md-4 mb-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">События</h5>
+                    <p class="card-text">Управление списком событий</p>
+                    <a asp-controller="Event" asp-action="Index" class="btn btn-success">Перейти</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 mb-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Сотрудники</h5>
+                    <p class="card-text">Управление сотрудниками</p>
+                    <a asp-controller="Employee" asp-action="Index" class="btn btn-success">Перейти</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 mb-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Билеты</h5>
+                    <p class="card-text">Управление билетами</p>
+                    <a asp-controller="Ticket" asp-action="Index" class="btn btn-success">Перейти</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

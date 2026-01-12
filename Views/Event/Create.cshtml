@@ -1,0 +1,64 @@
+﻿@model C_Sharp_IKM.Models.Event
+
+@{
+    ViewData["Title"] = "Новое событие";
+}
+
+<div class="container">
+    <h2>Добавление события</h2>
+
+    @* Форма отправляет данные в метод Create (POST) *@
+    <form asp-action="Create" method="post">
+        @Html.AntiForgeryToken() @* Защита от взлома *@
+
+        @* 1. ID *@
+        <div class="mb-3">
+            <label asp-for="Id">Номер события</label>
+            <input asp-for="Id" class="form-control" type="number" />
+            <span asp-validation-for="Id" class="text-danger"></span> @* Ошибка здесь *@
+        </div>
+
+        @* 2. Название *@
+        <div class="mb-3">
+            <label asp-for="Name">Название</label>
+            <input asp-for="Name" class="form-control" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+
+        @* 3. Выбор даты *@
+        <div class="mb-3">
+            <label asp-for="EventDate">Дата проведения</label>
+            <input asp-for="EventDate" class="form-control" type="date" id="EventDate" />
+            <span asp-validation-for="EventDate" class="text-danger"></span>
+        </div>
+
+        @* 4. Выпадающий список типов *@
+        <div class="mb-3">
+            <label asp-for="EventType">Тип события</label>
+            <select asp-for="EventType" class="form-control" asp-items="ViewBag.EventTypes">
+                <option value="">-- Выберите тип --</option>
+            </select>
+            <span asp-validation-for="EventType" class="text-danger"></span>
+        </div>
+
+        @* 5. Кнопки *@
+        <div class="mt-4">
+            <button type="submit" class="btn btn-success">Создать</button>
+            <a asp-action="Index" class="btn btn-secondary">Назад</a>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    @* Подключаем проверку данных на стороне клиента (чтобы страница не перезагружалась зря) *@
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        // Запрещаем выбирать в календаре даты раньше сегодня
+        document.addEventListener('DOMContentLoaded', function() {
+            const dateInput = document.getElementById('EventDate');
+            const today = new Date().toISOString().split('T')[0];
+            dateInput.min = today;
+            dateInput.value = today; // Ставим сегодня по умолчанию
+        });
+    </script>
+}
